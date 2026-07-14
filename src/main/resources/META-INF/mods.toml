@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+
+[[mods]]
+modId="educheat"
+version="1.0"
+displayName="EduCheat"
+logoFile="educheat.png"
+credits="Educational purposes only"
+authors="YourName"
+description='''
+Educational cheat mod for Minecraft 1.16.5
+For singleplayer use only!
+Features:
+- AimBot with smooth aiming
+- TriggerBot with delay
+- ESP (coming soon)
+- Beautiful GUI menu
+'''
+
+[[dependencies.educheat]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.educheat]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="BOTH"
