@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
     }
     dependencies {
@@ -8,12 +8,16 @@ buildscript {
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
-group = 'com.example'
-version = '1.0.0'
-archivesBaseName = 'hvvisuals'
+version = '1.0'
+group = 'com.yourname.educheat'
+archivesBaseName = 'educheat'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
     mappings channel: 'official', version: '1.16.5'
@@ -21,24 +25,39 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            property 'forge.logging.mojang_level', 'info'
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
             mods {
-                hvvisuals {
+                educheat {
                     source sourceSets.main
                 }
             }
         }
         server {
             workingDirectory project.file('run')
-            property 'forge.logging.mojang_level', 'info'
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
             mods {
-                hvvisuals {
+                educheat {
+                    source sourceSets.main
+                }
+            }
+        }
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', 'educheat', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            mods {
+                educheat {
                     source sourceSets.main
                 }
             }
         }
     }
 }
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
@@ -47,13 +66,28 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "hvvisuals",
-            "Specification-Vendor": "example",
+            "Specification-Title": "educheat",
+            "Specification-Vendor": "yourname",
             "Specification-Version": "1",
             "Implementation-Title": project.name,
-            "Implementation-Version": project.version,
-            "Implementation-Vendor" :"example",
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"yourname",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
     }
 }
