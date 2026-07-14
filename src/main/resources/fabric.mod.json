@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "hvvisuals",
+  "version": "1.0.0",
+  "name": "HVVisuals",
+  "description": "Визуальные улучшения для Minecraft 1.16.5 Fabric",
+  "authors": ["Твой Ник"],
+  "contact": {
+    "homepage": "https://github.com/твой-ник/HVVisuals"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.example.hvvisuals.HVVisualsMod"
+    ],
+    "client": [
+      "com.example.hvvisuals.client.HVVisualsClient"
+    ]
+  },
+  "mixins": [
+    "hvvisuals.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.22",
+    "fabric": "*",
+    "minecraft": "1.16.5"
+  }
+}
